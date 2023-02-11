@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from perevalapp.views import submitData
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/perevallist/", submitData.as_view()),
+    path("api/v1/perevallist/<int:pk>/", submitData.as_view()),
 ]
