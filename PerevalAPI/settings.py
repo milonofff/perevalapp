@@ -11,18 +11,25 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dotenv # <- New
+
+# Add .env variables anywhere before SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from .config import *
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-)8zkv0#t@qmder3gk=x6_@i0h%)#ze=n=+sjcndnm@@(+6c8ef"
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,10 +88,10 @@ DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.postgresql_psycopg2',
         "NAME": 'pereval_db',
-        "USER": FSTR_DB_LOGIN,
-        "PASSWORD": FSTR_DB_PASS,
-        "HOST": FSTR_DB_HOST,
-        "PORT": FSTR_DB_PORT
+        "USER": os.environ["FSTR_DB_LOGIN"],
+        "PASSWORD": os.environ["FSTR_DB_PASS"],
+        "HOST": os.environ["FSTR_DB_HOST"],
+        "PORT": os.environ["FSTR_DB_PORT"]
     }
 }
 
